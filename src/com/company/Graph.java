@@ -1,44 +1,32 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Graph{
-    private static String[] allStation;
-    private static String firstStation;
-    ArrayList<ArrayList<Vertex>> arrayList = new ArrayList<>();
+public class Graph {
+    private  ArrayList<Station> stations;
+    ArrayList<ArrayList<Double>> lengths;
+    private static final double MAXLENGTH = Double.MAX_VALUE;
 
-    public static void addStation(String station){
-        if(allStation.length == 0){
-            firstStation = station;
-
-        }
+    public  void addStation(Station station){
+        stations.add(station);
+        lengths.add(new ArrayList<Double>());
     }
-    public static void askQuestion(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please add station that you want to add");
-        String station = scanner.next();
-        if(station != " "){
-            addStation(station);
-            System.out.println("Please fill connection that have station or if it is last just leave fill empty ");
-            String connection = scanner.next();
-            ArrayList<String> nearStation = new ArrayList<>();
-            while (scanner.hasNext(connection)){
-                nearStation.add(connection);
-                scanner.next();
-            }
-            addVertex(station,nearStation);
 
+    public void addLength(Station station,Station secondStation,double length) throws NoSuchStationException {
+        if(stations.contains(station) && stations.contains(secondStation)){
+            int index = stations.indexOf(station);
+            int secondIndex = stations.indexOf(secondStation);
+            lengths.get(index).set(secondIndex,length);// spisok rasstoyaniy ot stanciy index do vsex drugix
+            lengths.get(secondIndex).set(index,length);
         } else {
-            System.out.println("empty field");
+            throw new NoSuchStationException();
         }
     }
+    
 
-    public static void addVertex(String station,ArrayList<String> nearStation){
-
-    }
-    private class Vertex{
-        String station;
-        String[] nearStations;
-    }
 }
+
+// TODO: 05.11.2021 NoSuchStation Exception, menu addStation(reshit problemu s nulevymi rasstoyaniyami),method kotoryy naxodit rasstoyaniya
+// TODO: 05.11.2021 deixtra,  
