@@ -1,32 +1,45 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Graph {
-    private  ArrayList<Station> stations;
-    ArrayList<ArrayList<Double>> lengths;
+    public static ArrayList<Station> stations = new ArrayList<>(10);
+    private static ArrayList<ArrayList<Double>> lengths = new ArrayList<>(10);
     private static final double MAXLENGTH = Double.MAX_VALUE;
 
-    public  void addStation(Station station){
+    public void addStation(Station station) {
         stations.add(station);
-        lengths.add(new ArrayList<Double>());
+        int index = stations.indexOf(station);
+        System.out.println(index);
+        System.out.println(stations.get(index).getName());
+        lengths.add(index, new ArrayList<Double>());
     }
 
-    public void addLength(Station station,Station secondStation,double length) throws NoSuchStationException {
-        if(stations.contains(station) && stations.contains(secondStation)){
+    public void addLength(Station station, Station secondStation, double length) throws NoSuchStationException {
+        if (stations.contains(station) && stations.contains(secondStation)) {
             int index = stations.indexOf(station);
             int secondIndex = stations.indexOf(secondStation);
-            lengths.get(index).set(secondIndex,length);// spisok rasstoyaniy ot stanciy index do vsex drugix
-            lengths.get(secondIndex).set(index,length);
+            if (lengths.get(index).contains(secondIndex) && lengths.get(secondIndex).contains(index)) {
+                lengths.get(index).set(secondIndex, length);
+                lengths.get(secondIndex).set(index, length);
+            } else if (lengths.get(index).contains(secondIndex) && !lengths.get(secondIndex).contains(index)) {
+                lengths.get(index).set(secondIndex, length);
+                lengths.get(secondIndex).add(index, length);
+            }  else if (!lengths.get(index).contains(secondIndex) && lengths.get(secondIndex).contains(index)) {
+                lengths.get(index).add(secondIndex, length);
+                lengths.get(secondIndex).set(index, length);
+            } else {
+                lengths.get(index).add(secondIndex, length);
+                lengths.get(secondIndex).add(index, length);
+            }
         } else {
             throw new NoSuchStationException();
         }
     }
-    
+
+    public static void dijkstra(Station station, Station secondStation) {
+
+    }
+
 
 }
-
-// TODO: 05.11.2021 NoSuchStation Exception, menu addStation(reshit problemu s nulevymi rasstoyaniyami),method kotoryy naxodit rasstoyaniya
-// TODO: 05.11.2021 deixtra,  
