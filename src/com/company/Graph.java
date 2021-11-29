@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 
 public class Graph {
 
-    static HashMap<String, Set<Neighbour>> map = new HashMap<>();
+    static HashMap<String, Set<Neighbour>> map = new HashMap<>(); //Station
     Station station;
 
         public void addStation(Station station) {
@@ -14,11 +14,12 @@ public class Graph {
         }
 
         public void addLength(Station station,Station secondStation, int length){
-            if (!map.containsKey(station)) {
+            if (!map.containsKey(station.name)) {
                 map.put(station.name, new HashSet<>());
             }
             map.get(station.name).addAll(Arrays.asList(new Neighbour(secondStation.getName(), length)));
         }
+
 
         public void shortPath(String station,String secondStation){
             Map<String, ShortestPath> shortestPathMap  =  dijkstra(map,station);
@@ -51,10 +52,11 @@ public class Graph {
                         itr.remove();
                         if (current.getDistance() + neighbour.getDistance() < currentNeighbour.getDistance()) {
                             currentNeighbour.setDistance(current.getDistance() + neighbour.getDistance());
-                           ArrayList<String> newPath = new ArrayList<>(current.getPath());
-                            newPath.add(neighbour.getName());
-                            System.out.println(newPath);
-                            currentNeighbour.setPath(new ArrayList<>(current.getPath()));
+//                           ArrayList<String> newPath = new ArrayList<>(current.getPath());
+//                            newPath.add(neighbour.getName());
+//                            System.out.println(newPath);
+                           currentNeighbour.setPath(new ArrayList<>(current.getPath()));
+                           currentNeighbour.getPath().add(neighbour.getName());
                         }
                         unvisited.add(currentNeighbour);
                         break;
