@@ -1,28 +1,60 @@
 package com.company;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Set;
 
 public class Station {
     private String name;
-    private static Random id;
-    
-    public Station(String name, Random id) {
+    private int distance;
+    private Set<Neighbour> neighbours;
+    private ArrayList<String> path;
+
+    public Station(String name, int distance, Set<Neighbour> neighbours, ArrayList<String> path) {
         this.name = name;
-        this.id = id;
+        this.distance = distance;
+        this.neighbours = neighbours;
+        this.path = path;
+    }
+
+    public Station(String name, int distance, Set<Neighbour> neighbours) {
+        this.name = name;
+        this.distance = distance;
+        this.neighbours = neighbours;
+    }
+
+    public Station(String name) {
+        this.name = name;
     }
 
     public String getName() {
         return name;
     }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public Set<Neighbour> getNeighbours() {
+        return neighbours;
+    }
+
+    public ArrayList<String> getPath() {
+        return path;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public Random getId() {
-        return id;
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 
-    public void setId(Random id) {
-        this.id = id;
+    public void setNeighbours(Set<Neighbour> neighbours) {
+        this.neighbours = neighbours;
+    }
+
+    public void setPath(ArrayList<String> path) {
+        this.path = path;
     }
 }
